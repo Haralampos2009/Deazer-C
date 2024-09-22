@@ -1,0 +1,199 @@
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local ScreenGui = Instance.new("ScreenGui")
+local f1 = Instance.new("Frame")
+local Deazer = Instance.new("TextLabel")
+local UICorner = Instance.new("UICorner")
+local UICorner_2 = Instance.new("UICorner")
+local DeleteGui = Instance.new("TextButton")
+local UIGradient = Instance.new("UIGradient")
+local UICorner_3 = Instance.new("UICorner")
+local YesOpen = Instance.new("TextButton")
+local UICorner_4 = Instance.new("UICorner")
+
+--Properties:
+
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+f1.Name = "f1"
+f1.Parent = ScreenGui
+f1.BackgroundColor3 = Color3.fromRGB(49, 131, 27)
+f1.BorderColor3 = Color3.fromRGB(0, 0, 0)
+f1.BorderSizePixel = 0
+f1.Position = UDim2.new(0.652124703, 0, 0.305970162, 0)
+f1.Size = UDim2.new(0, -375, 0, 213)
+
+Deazer.Name = "Deazer"
+Deazer.Parent = f1
+Deazer.BackgroundColor3 = Color3.fromRGB(41, 171, 34)
+Deazer.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Deazer.BorderSizePixel = 0
+Deazer.Size = UDim2.new(0, 128, 0, 40)
+Deazer.Font = Enum.Font.SourceSans
+Deazer.Text = "Deazer_Hub"
+Deazer.TextColor3 = Color3.fromRGB(0, 0, 0)
+Deazer.TextSize = 22.000
+
+UICorner.Parent = Deazer
+
+UICorner_2.Parent = f1
+
+DeleteGui.Name = "Delete Gui"
+DeleteGui.Parent = f1
+DeleteGui.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+DeleteGui.BorderColor3 = Color3.fromRGB(27, 42, 53)
+DeleteGui.Position = UDim2.new(0.966170907, 0, 0, 0)
+DeleteGui.Size = UDim2.new(0, 15, 0, 18)
+DeleteGui.Font = Enum.Font.SourceSansBold
+DeleteGui.Text = "X"
+DeleteGui.TextColor3 = Color3.fromRGB(0, 0, 0)
+DeleteGui.TextSize = 14.000
+
+UIGradient.Parent = DeleteGui
+
+UICorner_3.Parent = DeleteGui
+
+YesOpen.Name = "Yes,Open"
+YesOpen.Parent = f1
+YesOpen.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+YesOpen.BorderColor3 = Color3.fromRGB(0, 0, 0)
+YesOpen.BorderSizePixel = 0
+YesOpen.Position = UDim2.new(0.00126902258, 0, 0.746478856, 0)
+YesOpen.Size = UDim2.new(0, 149, 0, 54)
+YesOpen.Font = Enum.Font.SourceSansBold
+YesOpen.Text = "Yes ,Open"
+YesOpen.TextColor3 = Color3.fromRGB(255, 255, 255)
+YesOpen.TextSize = 20.000
+UICorner_4.Parent = YesOpen
+
+-- Scripts:
+
+local function IIZCXG_fake_script() -- f1.LocalScript 
+	local script = Instance.new('LocalScript', f1)
+
+	
+end
+coroutine.wrap(IIZCXG_fake_script)()
+local function LXKZP_fake_script() -- DeleteGui.Click 
+	local script = Instance.new('Script', DeleteGui)
+
+	local Gui = script.Parent
+	
+	function onClicked()
+	script.Parent.Parent.Parent:Remove()
+	end
+	
+	Gui.MouseButton1Click:connect(onClicked)
+end
+coroutine.wrap(LXKZP_fake_script)()
+local function CVBFU_fake_script() -- YesOpen.Script 
+	local script = Instance.new('Script', YesOpen)
+
+	local Gui = script.Parent
+	
+
+	
+	Gui.MouseButton1Click:connect(onClicked)
+end
+coroutine.wrap(CVBFU_fake_script)()
+local function AFZTQV_fake_script() -- f1.LocalScript 
+	local script = Instance.new('LocalScript', f1)
+
+	local UserInputService = game:GetService('UserInputService')
+	
+	local frame = script.Parent
+	
+	local leadFrame = Instance.new('Frame') do
+		leadFrame.AnchorPoint = frame.AnchorPoint
+		leadFrame.Position = frame.Position
+		leadFrame.Size = frame.Size
+		leadFrame.Name = `Lead {frame.Name}`
+		leadFrame.Visible = false
+		leadFrame.Parent = frame.Parent
+	end
+	
+	local screenGui = frame:FindFirstAncestorOfClass('ScreenGui')
+	
+	local inputChanged = nil
+	local inputEnded = nil
+	
+	local function getBoundsRelations(guiObject : GuiObject)
+		local bounds = screenGui.AbsoluteSize
+		local topLeft = screenGui.IgnoreGuiInset and guiObject.AbsolutePosition + Vector2.new(0, 36) or guiObject.AbsolutePosition
+		local bottomRight = topLeft + guiObject.AbsoluteSize
+	
+		local boundRelations = {
+			Top = topLeft.Y < 0 and math.abs(topLeft.Y) or nil,
+			Left = topLeft.X < 0 and math.abs(topLeft.X) or nil,
+			Right = bottomRight.X > bounds.X and math.abs(bottomRight.X - bounds.X) or nil,
+			Bottom = bottomRight.Y > bounds.Y and math.abs(bottomRight.Y - bounds.Y) or nil,
+		}
+	
+		return (not boundRelations.Top
+			and not boundRelations.Bottom
+			and not boundRelations.Left
+			and not boundRelations.Right), boundRelations
+	end
+	
+	frame.InputBegan:Connect(function(inputObject : InputObject)
+		if inputObject.UserInputType == Enum.UserInputType.MouseButton1 then
+	
+			local lastMousePosition = UserInputService:GetMouseLocation()
+			local goalPosition = frame.Position
+	
+			inputChanged = UserInputService.InputChanged:Connect(function(input : InputObject, event : boolean)
+				if input.UserInputType == Enum.UserInputType.MouseMovement then
+					local currentMousePosition = UserInputService:GetMouseLocation()
+					local mouseDelta = currentMousePosition - lastMousePosition
+	
+					goalPosition += UDim2.fromOffset(mouseDelta.X, mouseDelta.Y)
+	
+					leadFrame.Position = goalPosition
+	
+					local isInBounds, relations = getBoundsRelations(leadFrame)
+	
+					if not isInBounds then
+						local x = (relations.Left or 0) - (relations.Right or 0)
+						local y = (relations.Top or 0) - (relations.Bottom or 0)
+	
+						goalPosition += UDim2.fromOffset(x, y)
+					end
+	
+					frame.Position = goalPosition
+					lastMousePosition = currentMousePosition
+				end
+			end)
+	
+			inputEnded = frame.InputEnded:Connect(function(input : InputObject)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+					inputChanged:Disconnect()
+					inputChanged = nil
+	
+					inputEnded:Disconnect()
+					inputEnded = nil
+				end
+			end)
+		end
+	end)
+	
+	frame.Destroying:Once(function()
+	
+		leadFrame = leadFrame:Destroy()
+	
+		if inputChanged  then
+			inputChanged:Disconnect()
+			inputChanged = nil
+		end
+	
+		if inputEnded then
+			inputEnded:Disconnect()
+			inputEnded = nil
+		end
+	end)
+	
+end
+coroutine.wrap(AFZTQV_fake_script)()
