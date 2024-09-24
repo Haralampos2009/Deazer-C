@@ -1,0 +1,8 @@
+skillsW = t 
+while skillsW do wait() 
+    pcall(function()
+            local LP = game:GetService("Players").LocalPlayer
+            local VIM = game:GetService("VirtualInputManager")
+         VIM:SendKeyEvent(true, Enum.KeyCode.W, false, game)
+        end)
+     end
