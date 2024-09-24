@@ -178,5 +178,3 @@ local function ASUTUK_fake_script() -- nil.NameScript
 	script.Parent.Name = "SpectateGui"
 end
 coroutine.wrap(ASUTUK_fake_script)()
- 
-end)
